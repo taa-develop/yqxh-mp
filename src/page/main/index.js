@@ -2,9 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
 import mpAdapter from 'axios-miniprogram-adapter'
-
-import ApolloClient from 'apollo-boost'
-import { ApolloProvider } from '@apollo/react-hooks'
+import { GraphQLClient, ClientContext } from 'graphql-hooks'
 
 import App from './App'
 
@@ -13,41 +11,29 @@ axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 export const instance = axios.create()
 
-const client = new ApolloClient({
-    uri: 'https://api.yiquanxinhe.com/graphql',
-    // request: operation => {
-    //     const token = window.$$global.token
-    //     let headers = {}
-    //     if (token) {
-    //         headers = {
-    //             authorization: `Bearer ${token}`
-    //         }
-    //     }
-    //     operation.setContext({ headers })
-    // },
+const client = new GraphQLClient({
+    url: 'https://api.yiquanxinhe.com/graphql',
     fetch: (url, options) =>
         instance({
             url,
             method: options.method,
             data: options.body,
             header: options.headers
-        }).then(({ data, statusCode }) => {
+        }).then(res => {
             return {
                 ok: () => {
                     return statusCode >= 200 && statusCode < 300
                 },
+                json: () => {
+                    return Promise.resolve(res.data)
+                },
                 text: () => {
-                    return Promise.resolve(JSON.stringify(data))
+                    return Promise.resolve(JSON.stringify(res.data))
                 }
             }
-        }),
-    clientState: {
-        defaults: {
-            loggedIn: false
-        },
-        resolvers: {}
-    }
+        })
 })
+window.$$global.client = client
 
 export default function createApp() {
     const container = document.createElement('div')
@@ -55,9 +41,9 @@ export default function createApp() {
     document.body.appendChild(container)
 
     ReactDOM.render(
-        <ApolloProvider client={client}>
+        <ClientContext.Provider value={client}>
             <App />
-        </ApolloProvider>,
+        </ClientContext.Provider>,
         container
     )
 }

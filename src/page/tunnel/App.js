@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from 'linaria/react'
 import { css } from 'linaria'
-import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 import Card from '../../components/Card'
 import Button from '../../components/Button'
 import dayjs from 'dayjs'
-import Rarrow from '../../assets/rArrow.png'
+import { useQuery } from 'graphql-hooks'
+
 const Wrap = styled.div`
     width: 100vw;
     height: 100vh;
@@ -75,7 +75,7 @@ const Icon = styled.div`
     background-image: url(https://i.loli.net/2020/04/25/it37Vgczw62E8lL.png);
 `
 
-const BATCH_LIST = gql`
+const BATCH_LIST = `
     query BatchList($pageQuery: PageQuery!, $batchQuery: BatchQuery!) {
         batchList(pageQuery: $pageQuery, batchQuery: $batchQuery) {
             id
@@ -106,6 +106,9 @@ function Tunnel() {
             title: `${tunnelName} > 批次列表`
         })
     }, [])
+    const handleClick = id => {
+        window.open(`/batch/${id}`)
+    }
     const { loading, error, data } = useQuery(BATCH_LIST, {
         variables: {
             pageQuery: {

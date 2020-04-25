@@ -1,6 +1,4 @@
-import React from 'react'
-import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { styled } from 'linaria/react'
 
@@ -19,16 +17,13 @@ const Wrap = styled.div`
     background-color: #eee;
 `
 
-const GET_LOAIN_STATUS = gql`
-    {
-        loggedIn @client
-    }
-`
-
 function App() {
-    const { data } = useQuery(GET_LOAIN_STATUS)
-    if (!data.loggedIn) {
-        return <Login></Login>
+    const [loggedIn, setLoggedIn] = useState(false)
+    const handleLoginSuccess = () => {
+        setLoggedIn(true)
+    }
+    if (!loggedIn) {
+        return <Login loginSuccess={handleLoginSuccess}></Login>
     }
     return (
         <Router>

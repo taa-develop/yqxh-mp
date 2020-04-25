@@ -8,7 +8,9 @@ module.exports = {
     router: {
         main: ['/main'],
         tunnel: ['/tunnel/:tunnelId'],
-        room: ['/room'],
+        batch: ['/batch/:batchId'],
+        stage: ['/stage/:stageId'],
+        room: ['/room/:roomId'],
         manage: ['/manage']
     },
     redirect: {
