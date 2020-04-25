@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { ClientContext } from 'graphql-hooks'
 
+import '../../page/index.css'
+
 import App from './App'
 
 export default function createApp() {

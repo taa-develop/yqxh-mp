@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from 'linaria/react'
 import { css } from 'linaria'
-import { useQuery } from '@apollo/react-hooks'
 import Card from '../../components/Card'
 import Button from '../../components/Button'
 import dayjs from 'dayjs'
 import { useQuery } from 'graphql-hooks'
-
-
-
 
 const Wrap = styled.div`
     width: 100vw;
@@ -135,7 +131,11 @@ function Tunnel() {
             </Header>
             <Content>
                 {data.batchList.map(v => (
-                    <Card key={v.id} className={CardSty}>
+                    <Card
+                        key={v.id}
+                        className={CardSty}
+                        onClick={() => handleClick(v.id)}
+                    >
                         <Items>
                             <ItemUp>
                                 <FiledsBox>
