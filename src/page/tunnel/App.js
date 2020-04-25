@@ -7,6 +7,9 @@ import Button from '../../components/Button'
 import dayjs from 'dayjs'
 import { useQuery } from 'graphql-hooks'
 
+
+
+
 const Wrap = styled.div`
     width: 100vw;
     height: 100vh;
