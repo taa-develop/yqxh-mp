@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 import { styled } from 'linaria/react'
-import { gql } from 'apollo-boost'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from 'graphql-hooks'
 
 const Wrap = styled.div`
     background-color: #00a6f3;
     flex: 1;
 `
 
-const CURRENT_USER = gql`
+const CURRENT_USER = `
     query {
         currentUser {
             id
