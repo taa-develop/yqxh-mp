@@ -14,6 +14,7 @@ const Wrap = styled.div`
     width: 100vw;
     display: flex;
     flex-direction: column;
+    background-color: #eee;
 `
 
 function App() {
