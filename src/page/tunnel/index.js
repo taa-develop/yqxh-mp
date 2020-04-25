@@ -6,6 +6,9 @@ import mpAdapter from 'axios-miniprogram-adapter'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 
+import '../../page/index.css'
+
+
 import App from './App'
 
 axios.defaults.adapter = mpAdapter

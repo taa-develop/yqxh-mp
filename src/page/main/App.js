@@ -16,6 +16,7 @@ const Wrap = styled.div`
     width: 100vw;
     display: flex;
     flex-direction: column;
+    background-color: #eee;
 `
 
 const GET_LOAIN_STATUS = gql`
