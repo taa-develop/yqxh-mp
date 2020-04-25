@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from 'linaria/react'
-import { gql } from 'apollo-boost'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from 'graphql-hooks'
 
 const Wrap = styled.div`
     width: 100vw;
@@ -13,7 +12,7 @@ const Card = styled.div`
     width: 100%;
 `
 
-const BATCH_LIST = gql`
+const BATCH_LIST = `
     query BatchList($pageQuery: PageQuery!, $batchQuery: BatchQuery!) {
         batchList(pageQuery: $pageQuery, batchQuery: $batchQuery) {
             id
@@ -44,6 +43,9 @@ function Tunnel() {
             title: `${tunnelName} > 批次列表`
         })
     }, [])
+    const handleClick = id => {
+        window.open(`/batch/${id}`)
+    }
     const { loading, error, data } = useQuery(BATCH_LIST, {
         variables: {
             pageQuery: {
@@ -63,7 +65,9 @@ function Tunnel() {
     return (
         <Wrap>
             {data.batchList.map(v => (
-                <Card key={v.id}>{v.number}</Card>
+                <Card key={v.id} onClick={() => handleClick(v.id)}>
+                    {v.number}
+                </Card>
             ))}
         </Wrap>
     )

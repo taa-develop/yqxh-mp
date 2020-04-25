@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { styled } from 'linaria/react'
 import { css } from 'linaria'
-import { useMutation, useApolloClient } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
+import { useMutation } from 'graphql-hooks'
 
 import { instance } from '../index'
 
@@ -47,7 +46,7 @@ const WxButton = css`
     }
 `
 
-const LOGIN_MUTATION = gql`
+const LOGIN_MUTATION = `
     mutation WeLogin($code: String!, $userInfo: InputWeChatUser) {
         weChatLogin(code: $code, userinfo: $userInfo) {
             token
@@ -55,7 +54,7 @@ const LOGIN_MUTATION = gql`
     }
 `
 
-function Login() {
+function Login({ loginSuccess }) {
     const [needAuth, setNeedAuth] = useState(true)
     const emitLogin = uInfo => {
         let userInfo = {
@@ -77,11 +76,7 @@ function Login() {
                             'Authorization'
                         ] = `Bearer ${token}`
                         window.$$global.token = token
-                        client.writeData({
-                            data: {
-                                loggedIn: true
-                            }
-                        })
+                        loginSuccess()
                     }
                 })
             }
@@ -103,7 +98,6 @@ function Login() {
     }, [])
     const userInfoButton = useRef()
     const [loginMutation] = useMutation(LOGIN_MUTATION)
-    const client = useApolloClient()
     const handleGetUserInfo = res => {
         emitLogin(res.detail.userInfo)
     }
