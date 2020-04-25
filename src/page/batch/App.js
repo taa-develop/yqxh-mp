@@ -60,16 +60,28 @@ const ItemDown = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 10rpx;
 `
 
 const CardSty = css`
-    height: 200rpx;
+    height: 320rpx;
+    display: flex;
+    flex-direction: column;
 `
+const CardStyH = css`
+    height: 220rpx;
+    display: flex;
+    flex-direction: column;
+`
+
 const Icon = styled.div`
     width: 30rpx;
     height: 30rpx;
     background-size: 100% 100%;
     background-image: url(https://i.loli.net/2020/04/25/it37Vgczw62E8lL.png);
+`
+const ButtonBox = styled.div`
+    width: 100%;
 `
 
 const STAGE_LIST = `
@@ -93,6 +105,11 @@ function Batch() {
     const handleClick = id => {
         window.open(`/stage/${id}`)
     }
+
+    const handleStartStage = () => {
+        console.log('click start')
+    }
+
     useEffect(() => {
         wx.setNavigationBarTitle({
             title: `阶段列表`
@@ -112,12 +129,25 @@ function Batch() {
     return (
         <Wrap>
             {data.stageListByBatchId.map((v, indx) => (
-                <Card
-                    key={v.id}
-                    className={CardSty}
-                    onClick={() => handleClick(v.id)}
-                >
+                <Card key={v.id} className={v.status == 0 ? CardSty : CardStyH}>
                     <Items>
+                        <ItemDown onClick={() => handleClick(v.id)}>
+                            <FiledsBox>
+                                <Lable>
+                                    开始时间：
+                                    {v.startTime == -1
+                                        ? ''
+                                        : dayjs
+                                              .unix(v.startTime)
+                                              .format('YYYY-MM-DD HH:mm')}
+                                </Lable>
+                            </FiledsBox>
+                            <FiledsBox>
+                                <Icon></Icon>
+                            </FiledsBox>
+                        </ItemDown>
+                        <Line></Line>
+
                         <ItemUp>
                             <FiledsBox>
                                 <Lable>阶段：{v.stageName}</Lable>
@@ -133,23 +163,13 @@ function Batch() {
                                 {v.status == 2 && <TagYjs>已结束</TagYjs>}
                             </FiledsBox>
                         </ItemUp>
-                        <Line></Line>
-                        <ItemDown>
-                            <FiledsBox>
-                                <Lable>
-                                    开始时间：
-                                    {v.startTime == -1
-                                        ? ''
-                                        : dayjs
-                                              .unix(v.startTime)
-                                              .format('YYYY-MM-DD HH:mm')}
-                                </Lable>
-                            </FiledsBox>
-                            <FiledsBox>
-                                <Icon></Icon>
-                            </FiledsBox>
-                        </ItemDown>
                     </Items>
+
+                    <ButtonBox>
+                        {v.status == 0 && (
+                            <Button onClick={handleStartStage}>开始阶段</Button>
+                        )}
+                    </ButtonBox>
                 </Card>
             ))}
         </Wrap>

@@ -12,7 +12,8 @@ const Wrap = styled.div`
     flex-direction: column;
     justify-content: space-around;
     color: #fff;
-    background-image: linear-gradient(#00a6f3, #6ab4ec);
+    /* background-image: linear-gradient(#00a6f3, #6ab4ec); */
+    background-image: linear-gradient(#194a7a, #6ab4ec);
 `
 const Header = styled.div`
     display: flex;
@@ -35,8 +36,10 @@ const WxButton = css`
     & element {
         width: 100px;
         font-size: 18px;
-        color: #fff;
-        background-color: #5bc0de;
+        /* color: #fff;
+        background-color: #5bc0de; */
+        color: #1d5181;
+        background-color: #fff;
         border-color: #46b8da;
         padding: 16px 24px;
         display: block;
