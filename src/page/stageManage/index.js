@@ -4,8 +4,7 @@ import { ClientContext } from 'graphql-hooks'
 
 import '../../page/index.css'
 
-import App from './App'
-
+const list = ['一次隧道阶段管理', '二次隧道阶段管理', '菇房阶段管理']
 export default function createApp() {
     const container = document.createElement('div')
     container.id = 'app'
@@ -13,7 +12,7 @@ export default function createApp() {
 
     ReactDOM.render(
         <ClientContext.Provider value={window.$$global.client}>
-            <App />
+            <div>{list[parseInt(window.location.pathname.split('/')[2])]}</div>
         </ClientContext.Provider>,
         container
     )

@@ -4,8 +4,6 @@ import { ClientContext } from 'graphql-hooks'
 
 import '../../page/index.css'
 
-import App from './App'
-
 export default function createApp() {
     const container = document.createElement('div')
     container.id = 'app'
@@ -13,7 +11,7 @@ export default function createApp() {
 
     ReactDOM.render(
         <ClientContext.Provider value={window.$$global.client}>
-            <App />
+            <div>用户权限管理</div>
         </ClientContext.Provider>,
         container
     )

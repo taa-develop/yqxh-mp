@@ -11,14 +11,37 @@ module.exports = {
         batch: ['/batch/:batchId'],
         stage: ['/stage/:stageId'],
         room: ['/room/:roomId'],
-        manage: ['/manage']
+        stageManage: ['/stage-manage/:stageType'],
+        indicatorManage: ['/indicator-manage/:indicatorType'],
+        userPowerManage: ['/user-power-manage']
     },
     redirect: {
         notFound: 'main',
         accessDenied: 'main'
     },
     generate: {
-        autoBuildNpm: 'npm'
+        autoBuildNpm: 'npm',
+        subpackages: {
+            package1: ['tunnel'],
+            package2: ['batch'],
+            package3: ['stage'],
+            package4: ['stageManage'],
+            package5: ['indicatorManage'],
+            package6: ['userPowerManage']
+        },
+        preloadRule: {
+            main: {
+                network: 'all',
+                packages: [
+                    'package1',
+                    'package2',
+                    'package3',
+                    'package4',
+                    'package5',
+                    'package6'
+                ]
+            }
+        }
     },
     app: {
         navigationBarTitleText: 'miniprogram-project'

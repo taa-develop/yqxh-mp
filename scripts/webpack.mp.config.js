@@ -12,7 +12,19 @@ module.exports = {
         main: path.resolve(__dirname, '../src/page/main/index.js'),
         tunnel: path.resolve(__dirname, '../src/page/tunnel/index.js'),
         batch: path.resolve(__dirname, '../src/page/batch/index.js'),
-        stage: path.resolve(__dirname, '../src/page/stage/index.js')
+        stage: path.resolve(__dirname, '../src/page/stage/index.js'),
+        stageManage: path.resolve(
+            __dirname,
+            '../src/page/stageManage/index.js'
+        ),
+        indicatorManage: path.resolve(
+            __dirname,
+            '../src/page/indicatorManage/index.js'
+        ),
+        userPowerManage: path.resolve(
+            __dirname,
+            '../src/page/userPowerManage/index.js'
+        )
     },
     output: {
         path: path.resolve(__dirname, '../build/mp/common'), // 放到小程序代码目录中的 common 目录下
