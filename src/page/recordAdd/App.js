@@ -62,8 +62,6 @@ const ZHIBIAO_LIST = `
 `
 
 function RecordAdd() {
-    console.log(window.$$global.environment)
-
     const [lw, setLw] = useState('')
     const [bz, setBz] = useState('')
     const [sj, setSj] = useState([])

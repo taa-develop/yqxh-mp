@@ -13,6 +13,7 @@ module.exports = {
         recordAdd: ['/recordAdd'],
         stage: ['/stage/:stageId'],
         room: ['/room/:roomId'],
+        roomAdd: ['/roomAdd'],
         stageManage: ['/stage-manage/:stageType'],
         indicatorManage: ['/indicator-manage/:indicatorType'],
         userPowerManage: ['/user-power-manage']
@@ -31,7 +32,8 @@ module.exports = {
             package5: ['indicatorManage'],
             package6: ['userPowerManage'],
             package7: ['batchAdd'],
-            package8: ['recordAdd']
+            package8: ['recordAdd'],
+            package9: ['roomAdd'],
         },
         preloadRule: {
             main: {
@@ -45,6 +47,7 @@ module.exports = {
                     'package6',
                     'package7',
                     'package8',
+                    'package9',
                 ]
             }
         }
