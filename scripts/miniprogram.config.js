@@ -9,6 +9,8 @@ module.exports = {
         main: ['/main'],
         tunnel: ['/tunnel/:tunnelId'],
         batch: ['/batch/:batchId'],
+        batchAdd: ['/batchAdd/:environment'],
+        recordAdd: ['/recordAdd'],
         stage: ['/stage/:stageId'],
         room: ['/room/:roomId'],
         stageManage: ['/stage-manage/:stageType'],
@@ -27,7 +29,9 @@ module.exports = {
             package3: ['stage'],
             package4: ['stageManage'],
             package5: ['indicatorManage'],
-            package6: ['userPowerManage']
+            package6: ['userPowerManage'],
+            package7: ['batchAdd'],
+            package8: ['recordAdd']
         },
         preloadRule: {
             main: {
@@ -38,7 +42,9 @@ module.exports = {
                     'package3',
                     'package4',
                     'package5',
-                    'package6'
+                    'package6',
+                    'package7',
+                    'package8',
                 ]
             }
         }

@@ -98,6 +98,17 @@ const BATCH_LIST = `
 `
 
 function Tunnel() {
+    let environment =
+        window.location.pathname.split('/')[2] === '0'
+            ? 'ONCE_TUNNEL'
+            : 'TWICE_TUNNEL'
+
+    window.$$global.environment = environment
+
+    window.addEventListener('wxshow', () => {
+        refetch()
+    })
+
     const [tunnelName] = useState(
         window.location.pathname.split('/')[2] === '0' ? '一次隧道' : '二次隧道'
     )
@@ -107,13 +118,23 @@ function Tunnel() {
         })
     }, [])
     const handleClick = id => {
+        window.$$global.batchId = id
         window.open(`/batch/${id}`)
     }
-    const { loading, error, data } = useQuery(BATCH_LIST, {
+    const handleBatchAdd = id => {
+        let environment =
+            window.location.pathname.split('/')[2] === '0'
+                ? 'ONCE_TUNNEL'
+                : 'TWICE_TUNNEL'
+
+        window.open(`/batchAdd/${environment}`)
+    }
+
+    const { loading, error, data, refetch } = useQuery(BATCH_LIST, {
         variables: {
             pageQuery: {
                 pageNum: 1,
-                pageSize: 10
+                pageSize: 1000
             },
             batchQuery: {
                 environment:
@@ -123,12 +144,13 @@ function Tunnel() {
             }
         }
     })
+
     if (loading) return <p>Loading ...</p>
     console.log(data)
     return (
         <Wrap>
             <Header>
-                <Button>添加批次</Button>
+                <Button onClick={handleBatchAdd}>添加批次</Button>
             </Header>
             <Content>
                 {data.batchList.map(v => (

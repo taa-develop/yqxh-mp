@@ -4,7 +4,7 @@ import { css } from 'linaria'
 import Card from '../../components/Card'
 import Button from '../../components/Button'
 import dayjs from 'dayjs'
-import { useQuery } from 'graphql-hooks'
+import { useQuery, useMutation } from 'graphql-hooks'
 const Wrap = styled.div`
     width: 100vw;
     height: 100vh;
@@ -100,14 +100,18 @@ const STAGE_LIST = `
         }
     }
 `
+const STAGE_START = `mutation StartStage($batchId: Int!,$stageId: Int!) {
+    startStage(batchId: $batchId,stageId: $stageId)
+}`
 
 function Batch() {
-    const handleClick = id => {
-        window.open(`/stage/${id}`)
-    }
+    window.addEventListener('wxshow', () => {
+        refetch()
+    })
 
-    const handleStartStage = () => {
-        console.log('click start')
+    const handleClick = id => {
+        window.$$global.stageId = id
+        window.open(`/stage/${id}`)
     }
 
     useEffect(() => {
@@ -115,7 +119,33 @@ function Batch() {
             title: `阶段列表`
         })
     }, [])
-    const { loading, error, data } = useQuery(STAGE_LIST, {
+
+    const [stageStart] = useMutation(STAGE_START)
+
+    const handleStartStage = async id => {
+        const { data, error } = await stageStart({
+            variables: {
+                environment: window.$$global.environment,
+                batchId: window.$$global.batchId,
+                stageId: id
+            }
+        })
+        if (error) {
+            console.log(error)
+        } else if (data) {
+            wx.showToast({
+                title: '已开始',
+                icon: 'success',
+                duration: 3000,
+                success: function() {
+                    setTimeout(() => {
+                        refetch()
+                    }, 2000)
+                }
+            })
+        }
+    }
+    const { loading, error, data, refetch } = useQuery(STAGE_LIST, {
         variables: {
             pageQuery: {
                 pageNum: 1,
@@ -129,7 +159,10 @@ function Batch() {
     return (
         <Wrap>
             {data.stageListByBatchId.map((v, indx) => (
-                <Card key={v.id} className={v.status == 0 ? CardSty : CardStyH}>
+                <Card
+                    key={v.id}
+                    className={indx == 0 && v.status == 0 ? CardSty : CardStyH}
+                >
                     <Items>
                         <ItemDown onClick={() => handleClick(v.id)}>
                             <FiledsBox>
@@ -166,8 +199,12 @@ function Batch() {
                     </Items>
 
                     <ButtonBox>
-                        {v.status == 0 && (
-                            <Button onClick={handleStartStage}>开始阶段</Button>
+                        {indx == 0 && v.status == 0 &&
+                            
+                        (
+                            <Button onClick={() => handleStartStage(v.id)}>
+                                开始阶段
+                            </Button>
                         )}
                     </ButtonBox>
                 </Card>

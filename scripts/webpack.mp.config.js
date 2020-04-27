@@ -12,6 +12,8 @@ module.exports = {
         main: path.resolve(__dirname, '../src/page/main/index.js'),
         tunnel: path.resolve(__dirname, '../src/page/tunnel/index.js'),
         batch: path.resolve(__dirname, '../src/page/batch/index.js'),
+        batchAdd: path.resolve(__dirname, '../src/page/batchAdd/index.js'),
+        recordAdd: path.resolve(__dirname, '../src/page/recordAdd/index.js'),
         stage: path.resolve(__dirname, '../src/page/stage/index.js'),
         stageManage: path.resolve(
             __dirname,
